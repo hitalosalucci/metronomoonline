@@ -1,0 +1,10 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-color: #eeeeee;
+}
+
+/*define que a div opcoes tem o display por padrao none(esconde na tela)*/
+#div_opcoes{
+	display: none;
+}
