@@ -3,6 +3,12 @@ const tocar = document.getElementById('tocar_btn');
 
 const bpm_range = document.getElementById('input_bpm_range');
 
+const volume_tempo_range = document.getElementById('input_volume_tempos');
+
+const volume_marcador_range = document.getElementById('input_volume_marcador');
+
+const volume_divisao_range = document.getElementById('input_volume_divisao');
+
 const bpm_txt = document.getElementById('input_bpm_txt');
 
 const bpm_mais = document.getElementById('mais_bpm_btn');
@@ -10,6 +16,8 @@ const bpm_mais = document.getElementById('mais_bpm_btn');
 const bpm_menos = document.getElementById('menos_bpm_btn');
 
 const tap_btn = document.getElementById('tap_tempo_btn');
+
+const audio_divisao = document.getElementById('audio_divisao');
 
 /*audio = document.getElementById('sub1');
 
@@ -30,6 +38,8 @@ var som_sel = document.getElementById('som_sel');
 var som_sel_valor = parseInt(som_sel.options[som_sel.selectedIndex].value);
 
 qnt_compasso_sel_valor = (qnt_compasso_sel_valor + 1);
+
+let tempo_divisao = null;
 
 let currentBpm = 60;
 
@@ -88,6 +98,7 @@ som_sel.addEventListener('change', function(){
 
 });
 
+//inciar metronomo funcão
 function iniciar(){
 		
 		verificar_som();
@@ -95,8 +106,40 @@ function iniciar(){
 	    audio.play();
 
 	    contar();
+}
+
+//iniciar_divisao
+function iniciar_divisao(){
+		
+	verificar_som();
+	audio_divisao.currentTime = 0;
+	audio_divisao.play();
+
+	contar();
 
 }
+
+//quando modificado, vai alterar o volume do audio do tempo
+volume_tempo_range.addEventListener('change', function(){
+	
+	audio.volume = volume_tempo_range.value;
+
+});
+
+//quando modificado, vai alterar o volume do audio do marcador
+volume_marcador_range.addEventListener('change', function(){
+	
+	audio_marcador.volume = volume_marcador_range.value;
+
+});
+
+//quando modificado, vai alterar o volume do audio da divisao
+volume_divisao_range.addEventListener('change', function(){
+	
+	audio_divisao.volume = volume_divisao_range.value;
+
+});
+
 
 function contar(){
 
@@ -119,18 +162,19 @@ function verificarCheckMarcador() {
         
         if (tick_contar == 1) {
 
-    	audio.muted = true;
+		audio.muted = true;
+		audio_divisao.muted = true;
     	audio_marcador.play();
     	} else if (tick_contar != 1) {
-    	audio.muted = false;
+		audio.muted = false;
     }
 
     }  else {
-       audio.muted = false;
+	   audio.muted = false;
     }
 }
 
-
+//conta a qnt de compasso e mostra na tela
 qnt_compasso_sel.addEventListener('change', function(){
     qnt_compasso_sel_valor = qnt_compasso_sel.options[qnt_compasso_sel.selectedIndex].value = this.value;
     qnt_compasso_sel_valor = parseInt(qnt_compasso_sel_valor) + 1;
@@ -226,7 +270,8 @@ tocar.addEventListener('click', function(){
     //se ja estiver tocando simplesmente zera o tempo de intervalo
     if (tocando_agr) {
     	tocar.innerHTML = 'Iniciar';
-    	clearInterval(tempo);
+		clearInterval(tempo);
+		clearInterval(tempo_divisao);
     	tick_contar = 0;
     	numero_tempo.innerHTML = "<strong>--</strong>"; 
 
@@ -235,8 +280,13 @@ tocar.addEventListener('click', function(){
 
     }else{
     	tocar.innerHTML = 'Parar';
-    	iniciar();
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+		//inicia o audio do metronomo
+		iniciar();
+
+		//inicia o audio da divisao
+		iniciar_divisao();
+
+		tempo = setInterval(iniciar, (60*1000)/currentBpm);
 
     	tocar.classList.remove('green');
     	tocar.classList.add('red');

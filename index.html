@@ -8,7 +8,7 @@
 	<meta name="classification" content="Internet">
 	<meta name="distribution" content="Global">
 	<meta name="rating" content="General">
-	<meta name="keywords" content="metronomo, online, metrônomo profissional, metronomo gratis, marcador, bpm, tempo, praticar, musica, cifra, guitarra, violão, guitarra, tablaturas, cursos, ebook, guitarra intensiva, curso online">
+	<meta name="keywords" content="metronomo, online, metrônomo profissional, metronomo gratis, marcador, bpm, tempo, praticar, musica, cifra, guitarra, violão, improviso, tablaturas, escala, virtuose, ebook, guitarra intensiva, curso online">
 	<meta property="og:url" content="https://www.metronomoonline.ml/">
 	<meta name="twitter:title" content="Metrônomo online | Profissional | Grátis">
 	<meta name="description" content="Marcador de tempo musical (BPM), completo, profissional e grátis, sem precisar instalar ou baixar. Pratique pelo celular, tablet ou computador. Estude, pratique">
@@ -63,7 +63,7 @@
 	<div class="navbar-fixed">
 		<nav class="blue">
 			<div class="nav-wrapper">
-				<a href="https://www.metronomoonline.tk" class="brand-logo"><span> </span><span class="truncate">MetronomoOnline</span></a>
+				<a href="https://www.metronomoonline.ml" class="brand-logo"><span> </span><span class="truncate"> MetronomoOnline</span></a>
 				<a href="#" data-activates="mobile-demo" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
 				<ul class="right hide-on-med-and-down">
 					<li><a href="sass.html">Normal link1</a></li>
@@ -99,7 +99,6 @@
 		<!-- menu  lateral -->
 		<section>
 			<br>
-
 			<div class="col l2 m2 hide-on-med-and-down collection" id="menu-lateral">
 				<span class="collection-header"><h6><i class="material-icons left">music_note</i>Instrumentos</h6></span>	
 				<a href="" class="collection-item active blue" title="O melhor e mais completo metrônomo online da internet"><span class="white-text">Metrônomo</span></a>
@@ -120,9 +119,6 @@
 
 
 		<main>
-
-
-
 			<!-- main - corpo principal -->
 			<div class="col s12 l8 m12 section p-3">
 
@@ -150,6 +146,9 @@
 								<span class="center-align col s12"><h6><span class="black-text" id="numero_tempo"><strong>--</strong></span></h6></span>
 
 								<!-- audios metronomos -->
+
+								<!-- audio divisao -->
+								<audio id='audio_divisao' src="audio/divisao.wav"></audio>
 
 								<!-- Clicks -->
 								<audio id='sub1' src="audio/clicks/sub1.wav"></audio>
@@ -271,7 +270,7 @@
 												<label>Volume dos tempos</label>
 												<br><br>
 												<p class="range-field">
-													<input type="range" class="red" min="0" max="100" name="input_volume_divisao" id="input_volume_divisao" value="100">
+													<input type="range" class="red" min="0" max="1" step="0.01" name="input_volume_tempos" id="input_volume_tempos" value="100">
 												</p>
 											</div>
 
@@ -279,7 +278,7 @@
 													<label>Volume do marcador</label>
 													<br><br>
 													<p class="range-field">
-														<input type="range" class="red" min="0" max="100" name="input_volume_divisao" id="input_volume_divisao" value="100">
+														<input type="range" class="red" min="0" max="1" step="0.01" name="input_volume_marcador" id="input_volume_marcador" value="100">
 													</p>
 												</div>
 
@@ -289,7 +288,7 @@
 											<br>
 											<br>
   											<select class="browser-default" id="som_sel">
-												<option value="1" selected>Colcheia(2)</option>  
+												<option value="0" selected>Sem divisão</option>  
 												<option value="2">Colcheia(2)</option>
 												<option value="3">Tercina(3)</option>
 												<option value="4">Semicoclheia(4)</option>
@@ -299,7 +298,7 @@
 											<label>Volume da divisão</label>
 											<br><br>
 											<p class="range-field">
-												<input type="range" class="red" min="0" max="100" name="input_volume_divisao" id="input_volume_divisao" value="100">
+												<input type="range" class="red" min="0" max="1" step="0.01" name="input_volume_divisao" id="input_volume_divisao" value="100">
 											</p>
 										</div>
 
@@ -310,26 +309,60 @@
 					</div>
 				</div>
 			</div>
+		</main>
 
 			<section>
-				<div class="section col s12 m12 l2 hide-on-med-and-down red m-3" id="anuncios-direita">
-					<div class="toc-wrapper pin-top">
-						ANÚNCIO RIGHT
+				<div class="section col s12 m12 l2 hide-on-med-and-down m-3" id="anuncio-direita">
+					<div class="toc-wrapper pin-top center-align">
+						<a href="https://hotm.art/GuitarraInstensiva" target="_blank" rel="nofollow"><img src="" class="responsive-img" alt="Curso Guitarra Intensiva" id="img_anuncio_lateral"></a>
 					</div>	
 				</div>
 			</section>
+
 			<section>	
-				<div class="section col s12 m12 l12 xl12 center-align green float" id="anuncios-direita">
+				<div class="section col s12 m12 l12 xl12 center-align green float" id="anuncio-meio">
 					<div class="toc-wrapper pin-top">
 						ANÚNCIO MEIO SITE
 					</div>	
 				</div>
 			</section>
 
+	<section>
+		<div class="section col s10 m8 l8 offset-l2 offset-s1 offset-m2">
+				<br>
+				<h5>O que é metrônomo?</h5>
+				<p><i>Metrônomo</i> é uma ferramenta muito utilziada na música que produz um batimento com uma velocidade constante, que serve para auxiliar os músicos a tocar no tempo adequado e correto. É medido em batidas por minuto(BPM).</p>
+				<p>Ele é utilizado para prática, no qual o músico escolhe o andamento, e toca com base no som emitido pelo aparelho. Além de ser utilizado para treinar com o instrumento ele também é muito utilizado em shows e apresentações e, principalmente em gravações em estúdio para que o músico tenha o tempo/andamento da música como base, garantindo assim um andamento correto durante toda a música.</p>
 
+				<h5>Como utilizar o metrônomo</h5>
+				<p>Não precisa baixar e nem instalar nada, é totalmente online, e funciona no seu computador, celular(Android ou iOS) e tablet direto pelo navegador. Selecione o tempo, digitando-o na caixa ou utilizando o controle deslizante, ou ainda subindo ou descendo o andamento um por um com os botões ao lado do controle. Como alternativa, pode usar o botão "TAP", que ao clicar no andamento desejado o metrônomo marca o tempo na velocidade referida. Para iniciar, clique no botão "<strong>Iniciar</strong>".</p>
+				<p>Algumas configurações podem ser feitas, ao seu gosto, ao clicar na engrenagem no canto superior direito. Você pode selecionar o seu som preferido, pode hailitar ou não o uso do marcador de "cabeça do tempo", pode selecionar a quantidade de tempos, os volumes e ainda escolher uma divisão rítmca para te auxiliar no seu estudo. Se você vai utilizar somente o básico, não precisa alterar nada, é só configurar o andamento e iniciar.</p>
+				<p>O <i>metronomoonline.ml</i> pode ser usado para:</p>
+				<ul>
+					<li>- Encontrar o andamento indicado em uma partitura musical.</li>
+					<li>- Praticar e estudar. Selecione o tempo correto para tocar sem passar o ficar lento demais. Alianho com a prática das escalas te ajuda muito a tocar melhor no tempo certo.</li>
+					<li>- Melhorar sua técnica. Comece tocando devagar e gradualmente eqnaunto pratica, vá aumentando o tempo para que consiga tocar sem erros.</li>
+				</ul>
+				<br>
+				<hr>
+				<h5>Aprenda a solar na guitarra</h5>
+				<p>Se você que está perdido na hora de criar solos, já toca bem, mas não consegue entender o conceito da improvisação, onde melodia e harmonia soam em concordância, esse ebook foi feito pra você. O ebook "Como solar na Guitarra" foi escrito por <strong>Rodrigo Ferrarezi</strong>, professor de guitarra desde 2005, formado em "Licenciatura em música" pela Faculdade Pauista de Artes com "Especialização em Fusion" pela IG&T e "Produção Musical", pela Faculdade Anhembi Morumbi. Rodrigo também é criador do método <a href="https://hotm.art/GuitarraInstensiva" rel="nofollow">Guitarra Intensiva.</a></p>
+				<p><a href="https://hotm.art/ComoSolarGratis" rel="nofollow">Com esse ebook GRATUITO</a> você vai aprender de vez como fzer solos incrívies na guitarra, tocar com feeling e virtuose. Sem contar ainda que esse ebook tem um conteúdo de qualidade, era vendido a <del>R$47,00</del> e hoje está <strong>grátis</strong> a chance de fazer parte da lista VIP. Não perca tempo e essa oportunidade e baixe já o ebook. <a href="https://hotm.art/ComoSolarGratis" rel="nofollow">Clique aqui para fazer o download.</a></p>
 		</div>
-	</main>
+	</section>
 	
+	<section>	
+		<div class="section col s12 m12 l12 xl12 center-align float" id="anuncios-rodape">
+			<div class="toc-wrapper pin-top center-align">
+				<a href="https://hotm.art/GuitarraInstensiva" target="_blank" rel="nofollow"><img src="" class="responsive-img" alt="Curso Guitarra Intensiva" id="img_anuncio_rodape"></a>
+			</div>	
+		</div>
+	</section>
+
+
+	</div>
+	<!-- end row -->
+
 	<script src="materialize/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/animacoes.js"></script>		
 	<script type="text/javascript" src="js/audio.js"></script>

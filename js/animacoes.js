@@ -15,6 +15,50 @@ opcoes_btn.addEventListener('click', function(){
 
 });
 
+function random_lateral(){
+    return Math.floor(Math.random() * 4);
+}
+
+function random_rodape(){
+    return Math.floor(Math.random() * 3);
+}
+
+window.onload = carrega_anuncio_lateral();
+function carrega_anuncio_lateral(){
+    const img_lateral = document.getElementById('img_anuncio_lateral');
+
+    random_lateral();
+
+    if (random_lateral() == 0){
+        img_lateral.src = 'anuncios/laterais/bannergi1.jpg';
+    } else if (random_lateral() == 1){
+        img_lateral.src = 'anuncios/laterais/bannergi2.jpg';
+    } else if (random_lateral() == 2){
+        img_lateral.src = 'anuncios/laterais/bannergi3.jpg';
+    } else if (random_lateral() == 3){
+        img_lateral.src = 'anuncios/laterais/bannergi4.jpg';
+    } else {
+        img_lateral.src = 'anuncios/laterais/bannergi1.jpg';
+    }
+}
+
+window.onload = carrega_anuncio_rodape();
+function carrega_anuncio_rodape(){
+    const img_rodape = document.getElementById('img_anuncio_rodape');
+
+    random_rodape();
+
+    if (random_rodape() == 0){
+        img_rodape.src = 'anuncios/rodape/bannergi1.jpg';
+    } else if (random_rodape() == 1){
+        img_rodape.src = 'anuncios/rodape/bannergi2.jpg';
+    } else if (random_rodape() == 2){
+        img_rodape.src = 'anuncios/rodape/bannergi3.jpg';
+    } else {
+        img_rodape.src = 'anuncios/rodape/bannergi1.jpg';
+    }
+}
+
 
 //inicialização do menu
 /*$('.modal-trigger').leanModal();

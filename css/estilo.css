@@ -8,3 +8,18 @@ body{
 #div_opcoes{
 	display: none;
 }
+
+#anuncio-direita{
+	margin-top: 10px;
+}
+
+#img_anuncio_rodape{
+	margin-top: 30px;
+	width: 728px;
+	height: 90;
+}
+
+#img_anuncio_lateral{
+	width: 160px;
+	height: 600px;
+}
