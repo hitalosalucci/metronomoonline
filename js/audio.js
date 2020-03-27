@@ -1,4 +1,3 @@
-
 const tocar = document.getElementById('tocar_btn');
 
 const bpm_range = document.getElementById('input_bpm_range');
@@ -31,6 +30,10 @@ var qnt_compasso_sel = document.getElementById('qnt_compasso_sel');
 
 var qnt_compasso_sel_valor = parseInt(qnt_compasso_sel.options[qnt_compasso_sel.selectedIndex].value);
 
+var qnt_divisao_sel = document.getElementById('qnt_divisao_sel');
+
+var qnt_divisao_sel_valor = parseInt(qnt_divisao_sel.options[qnt_divisao_sel.selectedIndex].value);
+
 var marcador_check = document.getElementById("marcador_check");
 
 var som_sel = document.getElementById('som_sel');
@@ -51,10 +54,14 @@ let tempo_passado  = 0;
 
 let tick_contar = 0;
 
+let tick_contar_divisao = 0;
+
+//variavel do tap tempo
+var delta = 0;
+
 //irá verificar o som selcionado e mudar o audio
 function verificar_som(){
 
-	console.log(som_sel_valor);
 	if (som_sel_valor == 1) {
 		audio = document.getElementById('sub1');
 		audio_marcador = document.getElementById('marc1');
@@ -79,6 +86,9 @@ function verificar_som(){
 	} else if (som_sel_valor == 8) {
 		audio = document.getElementById('sub8');
 		audio_marcador = document.getElementById('marc8');
+	} else if (som_sel_valor == 9) {
+		audio = document.getElementById('sub9');
+		audio_marcador = document.getElementById('marc9');
 	} 
 
 }
@@ -88,12 +98,16 @@ som_sel.addEventListener('change', function(){
 	
 	//vai pegar o valor e passar
 	som_sel_valor = som_sel.options[som_sel.selectedIndex].value = this.value;
+
+	document.getElementById('input_volume_tempos').value = 1;
+	document.getElementById('input_volume_divisao').value = 1;
 	
 	verificar_som();
 	//se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
     if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+		
+		reiniciar_metronomo();
+
     }
 
 });
@@ -110,13 +124,12 @@ function iniciar(){
 
 //iniciar_divisao
 function iniciar_divisao(){
-		
-	verificar_som();
-	audio_divisao.currentTime = 0;
-	audio_divisao.play();
+	if (qnt_divisao_sel_valor != 1){	
+		audio_divisao.currentTime = 0;
+		audio_divisao.play();
 
-	contar();
-
+		contar_divisao();
+	}
 }
 
 //quando modificado, vai alterar o volume do audio do tempo
@@ -140,7 +153,7 @@ volume_divisao_range.addEventListener('change', function(){
 
 });
 
-
+//conta a quantidade de tick limitando ao compasso escolhido
 function contar(){
 
 	tick_contar += 1;
@@ -152,7 +165,24 @@ function contar(){
 	    }
 
 	 	numero_tempo.innerHTML = "<strong>"+tick_contar+"</strong>";
-	 	verificarCheckMarcador();    
+
+		 verificarCheckMarcador();    
+
+}
+
+//conta a quantidade de tick limitando ao compasso escolhido
+function contar_divisao(){
+
+	tick_contar_divisao += 1;
+	qnt_divisao_sel_valorm = (parseInt(qnt_divisao_sel_valor) + 1);
+
+	if (tick_contar_divisao == qnt_divisao_sel_valorm){
+		tick_contar_divisao = 1;
+	}
+
+		console.log(tick_contar_divisao);
+		   
+		verificarDivisaoMute();
 }
 
 //se o checkbox do marcador estiver selecionado, ele vai tocar o marcador, caso nãoe steja, não irá tocar
@@ -161,28 +191,59 @@ function verificarCheckMarcador() {
     if (marcador_check.checked == true){ 
         
         if (tick_contar == 1) {
-
-		audio.muted = true;
-		audio_divisao.muted = true;
-    	audio_marcador.play();
+			audio.muted = true;
+    		audio_marcador.play();
     	} else if (tick_contar != 1) {
-		audio.muted = false;
-    }
+			audio.muted = false;
+    	}
 
     }  else {
 	   audio.muted = false;
     }
 }
 
-//conta a qnt de compasso e mostra na tela
+//verifica a divisão e muta ela quando estiver na 'cabeça do tempo' ou quando for numero inteiro
+function verificarDivisaoMute() {
+		
+        if (tick_contar_divisao == 1) {
+		audio_divisao.muted = true;	
+    	} else {
+		audio_divisao.muted = false;
+		}
+
+}
+
+//muda o compasso do tempo(qnt de tempo)
 qnt_compasso_sel.addEventListener('change', function(){
     qnt_compasso_sel_valor = qnt_compasso_sel.options[qnt_compasso_sel.selectedIndex].value = this.value;
     qnt_compasso_sel_valor = parseInt(qnt_compasso_sel_valor) + 1;
 
     if (tocando_agr) {
-    	tick_contar = (qnt_compasso_sel_valor);
-    	tick_contar = 0;
-    }
+    	tick_contar = qnt_compasso_sel_valor;
+		tick_contar = 0;
+
+		tick_contar_divisao = 0;
+
+		reiniciar_metronomo();
+
+	}
+
+});
+
+//muda a qnt de divisao de tempo
+qnt_divisao_sel.addEventListener('change', function(){
+    qnt_divisao_sel_valor = qnt_divisao_sel.options[qnt_divisao_sel.selectedIndex].value = this.value;
+
+    if (tocando_agr) {
+		tick_contar = qnt_compasso_sel_valor;
+		tick_contar = 0;
+
+		tick_contar_divisao = (qnt_divisao_sel_valor);
+		tick_contar_divisao = 0;
+
+		reiniciar_metronomo();
+
+	}
 });
 
 
@@ -192,8 +253,9 @@ bpm_range.addEventListener('change', function(){
     currentBpm = parseInt(this.value);
 
     if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+		
+		reiniciar_metronomo();
+
     }
 
     ValorAndamento();
@@ -223,8 +285,9 @@ bpm_txt.addEventListener('change', function(){
 
     //se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
     if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+
+    	reiniciar_metronomo();
+		
     }
 });
 
@@ -238,8 +301,9 @@ bpm_mais.addEventListener('click', function(){
 
     //se tiver tocando no momento, reinicia com os novos parametros de current bpm
     if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+		
+		reiniciar_metronomo();
+	
     }
 
     ValorAndamento();
@@ -248,7 +312,7 @@ bpm_mais.addEventListener('click', function(){
 
 //diminui um bpm ao clicar
 bpm_menos.addEventListener('click', function(){
-	//não dexecuta o comando de diminiur quando o current bpm não for maior que 40
+	//não dexecuta o comando de diminiur quando o current bpm não for maior que 20
 	if (currentBpm > 20) {
 		currentBpm--;
 	}
@@ -257,23 +321,32 @@ bpm_menos.addEventListener('click', function(){
 
     //se tiver tocando no momento, reinicia com os novos parametros de current bpm
     if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+		
+		reiniciar_metronomo();
+
     }
 
     ValorAndamento();
 
 });
 
+function parar(){
+	
+		clearInterval(tempo);
+		clearInterval(tempo_divisao);
+		tick_contar = 0;
+		tick_contar_divisao = 0;
+
+}
+
 //inica o motronomo 
 tocar.addEventListener('click', function(){
     //se ja estiver tocando simplesmente zera o tempo de intervalo
     if (tocando_agr) {
-    	tocar.innerHTML = 'Iniciar';
-		clearInterval(tempo);
-		clearInterval(tempo_divisao);
-    	tick_contar = 0;
-    	numero_tempo.innerHTML = "<strong>--</strong>"; 
+		
+		parar();
+		tocar.innerHTML = 'Iniciar';
+		numero_tempo.innerHTML = "<strong>--</strong>"; 
 
     	tocar.classList.remove('red');
     	tocar.classList.add('green');
@@ -286,7 +359,11 @@ tocar.addEventListener('click', function(){
 		//inicia o audio da divisao
 		iniciar_divisao();
 
+		//intervalo de repetição do tempo
 		tempo = setInterval(iniciar, (60*1000)/currentBpm);
+
+		//intervalo de repetição da divisao
+		tempo_divisao = setInterval(iniciar_divisao, (60*1000)/currentBpm/qnt_divisao_sel_valor);
 
     	tocar.classList.remove('green');
     	tocar.classList.add('red');
@@ -295,52 +372,40 @@ tocar.addEventListener('click', function(){
     tocando_agr = !tocando_agr
 });
 
-tap_btn.addEventListener('click', function(){
-	currentBpm = 60;
+//tap tempo
+$("#tap_tempo_btn").click(function() {
 
-	tempo_passado = Tone.Transport.seconds;
-	//para o transport 	//inicia transport
-	Tone.Transport.stop().start();
+	var data = new Date();
+ 	var tempo = parseInt(data.getTime(), 10);
 
+	 $("#input_bpm_txt").val(Math.ceil(60000 / (tempo - delta)) );
+	 $("#input_bpm_range").val(Math.ceil(60000 / (tempo - delta)) );
 
-/*	tempo_passado_bpm = (60/tempo_passado).toFixed(2);
+	currentBpm = Math.ceil(60000 / (tempo - delta));
 
-	document.getElementById('input_bpm_txt').value = tempo_passado_bpm;*/
+	//limitar o valor maximo e minimo
 
-	document.getElementById('input_bpm_txt').value = (60/tempo_passado).toFixed(0);
+	if (currentBpm > 260) {
+		currentBpm = 260;
+		document.getElementById('input_bpm_range').value = 260;
+		document.getElementById('input_bpm_txt').value = 260;
+	}
 
-	document.getElementById('input_bpm_range').value = (60/tempo_passado).toFixed(0);
+	//caso o numero digitado no txt for menor que 20, o input trava em 20
+	if (currentBpm < 20) {
+		currentBpm = 20;
+		document.getElementById('input_bpm_range').value = 20;
+		document.getElementById('input_bpm_txt').value = 20;
+	}
 
-	currentBpm = (60/tempo_passado).toFixed(0);
-
-		//limitar o valor maximo e minimo
-	   
-	    if (currentBpm > 260) {
-			currentBpm = 260;
-			document.getElementById('input_bpm_range').value = 260;
-			document.getElementById('input_bpm_txt').value = 260;
-		}
-
-		//caso o numero digitado no txt for menor que 20, o input trava em 20
-    	if (currentBpm < 20) {
-			currentBpm = 20;
-			document.getElementById('input_bpm_range').value = 20;
-			document.getElementById('input_bpm_txt').value = 20;
-		}
-
-    //se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
-    if (tocando_agr) {
-    	clearInterval(tempo);
-    	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+	 //se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
+	 if (tocando_agr) {
+		
+		reiniciar_metronomo();
+		
     }
 
-    if (tempo_passado == 10) {
-    	 tempo_passado = 0;
-    	 Tone.Transport.stop();
-    }
-   
-
-    console.log(tempo_passado);
+  	delta = tempo;
 
 });
 
@@ -385,4 +450,19 @@ function ValorAndamento(){
 	} else if (currentBpm >= 200) {
 		andamento.innerHTML = "Andamento: <strong>Prestissimo</strong>";
 	}    
+}
+
+function reiniciar_metronomo(){
+	audio.muted = true;
+	audio.divisao = true;
+	audio_marcador.muted = true;
+	parar();
+	iniciar();
+	iniciar_divisao();
+
+	//intervalo de repetição do tempo
+	tempo = setInterval(iniciar, (60*1000)/currentBpm);
+
+	//intervalo de repetição da divisao
+	tempo_divisao = setInterval(iniciar_divisao, (60*1000)/currentBpm/qnt_divisao_sel_valor);
 }
