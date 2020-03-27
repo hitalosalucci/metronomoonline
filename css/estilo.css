@@ -4,6 +4,25 @@ body{
 	background-color: #eeeeee;
 }
 
+/*navbar*/
+
+.logo-nav{
+	max-width: 210px;
+	max-height: 55px;
+	width: auto;
+	height: auto;
+	margin-top: 1%;
+} 
+
+nav{
+	height: 100px;
+}
+
+/*paragrado*/
+p{
+	text-align: justify;
+}
+
 /*define que a div opcoes tem o display por padrao none(esconde na tela)*/
 #div_opcoes{
 	display: none;
@@ -43,7 +62,7 @@ body{
   .dot-active{
 	height: 17px;
 	width: 17px;
-	background-color: #01579b ;
+	background-color: #01579b;
 	border-radius: 50%;
 	display: inline-block;
   }

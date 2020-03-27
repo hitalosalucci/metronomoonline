@@ -59,6 +59,25 @@ function carrega_anuncio_rodape(){
     }
 }
 
+//button menu-mobile
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+//tooltip
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
+
+//scrollpsy
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.scrollspy');
+    var instances = M.ScrollSpy.init(elems);
+});
+
 
 //inicialização do menu
 /*$('.modal-trigger').leanModal();

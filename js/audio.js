@@ -64,6 +64,23 @@ let tick_contar_divisao = 0;
 //variavel do tap tempo
 var delta = 0;
 
+$('#marcador_check').on('click', function(){
+	//verifica se o ouvir marcador está marcado ou não e muda a cor do dot principal se estiver ou não marcado
+	if( $("#marcador_check").is(":checked")){
+	
+		$(".dot-active").css({
+			transform: "translateY(0px)",
+			background: "#01579b"
+		});
+	} else {
+		$(".dot-active").css({
+			transform: "translateY(0px)",
+			background: "#bbbbbb"
+		});
+
+	}	
+});
+
 //irá verificar o som selcionado e mudar o audio
 function verificar_som(){
 
@@ -105,7 +122,11 @@ som_sel.addEventListener('change', function(){
 	som_sel_valor = som_sel.options[som_sel.selectedIndex].value = this.value;
 
 	document.getElementById('input_volume_tempos').value = 1;
+	document.getElementById('input_volume_marcador').value = 1;
 	document.getElementById('input_volume_divisao').value = 1;
+	audio.volume = volume_tempo_range.value = 1;
+	audio_marcador.volume = volume_marcador_range.value = 1;
+	audio_divisao.volume = volume_divisao_range.value = 1;
 	
 	verificar_som();
 	//se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
@@ -135,13 +156,27 @@ function iniciar(){
 		  note.frequency.value = offBeatPitch;
 	
 		note.connect(context.destination);
+
 	
 		$(".dot").attr("style", "");
+
+				//verifica se o ouvir marcador está marcado ou não e muda a cor do dot principal se estiver ou não marcado
+				if( $("#marcador_check").is(":checked")){
+
+					$(".dot-active").css({
+						background: "#01579b"
+					});
+				} else {
+					$(".dot-active").css({
+						background: "#bbbbbb"
+					});
+				}
 
 		$(".dot").eq(tick_contar-1).css({
 		transform: "translateY(-5px)",
 		background: "#ef6c00"
 		});
+	
 }
 
 //iniciar_divisao
@@ -210,18 +245,30 @@ function contar_divisao(){
 //se o checkbox do marcador estiver selecionado, ele vai tocar o marcador, caso nãoe steja, não irá tocar
 function verificarCheckMarcador() {
 
-    if (marcador_check.checked == true){ 
+    /*if (marcador_check.checked == true){ 
         
         if (tick_contar == 1) {
 			audio.muted = true;
     		audio_marcador.play();
     	} else if (tick_contar != 1) {
 			audio.muted = false;
-    	}
+		}
 
     }  else {
 	   audio.muted = false;
-    }
+	}
+	*/
+	//verifica se o ouvir marcador está marcado ou não e muda a cor do dot principal se estiver ou não marcado
+	if( $("#marcador_check").is(":checked")){
+		if (tick_contar == 1) {
+			audio.muted = true;
+    		audio_marcador.play();
+    	} else if (tick_contar != 1) {
+			audio.muted = false;
+		}
+	} else {
+		audio.muted = false;
+	}	
 }
 
 //verifica a divisão e muta ela quando estiver na 'cabeça do tempo' ou quando for numero inteiro
@@ -377,11 +424,20 @@ function parar(){
 			transform: "translateY(0px)",
 			background: "#bbbbbbdd"
 		});
-
+		
+		//verifica se o ouvir marcador está marcado ou não e muda a cor do dot principal se estiver ou não marcado
+		if( $("#marcador_check").is(":checked")){
+			$(".dot-active").css({
+				transform: "translateY(0px)",
+				background: "#01579b"
+		});
+		} else if ( $("#marcador_check").is(":checked") == false){
 		$(".dot-active").css({
 			transform: "translateY(0px)",
-			background: "#01579b"
+			background: "#bbbbbbdd"
 		});
+
+	}
 
 }
 
@@ -454,6 +510,7 @@ $("#tap_tempo_btn").click(function() {
   	delta = tempo;
 
 });
+
 
 //mudar o titulo do anamento de acordo com o andamento
 function ValorAndamento(){
