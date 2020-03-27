@@ -1,3 +1,8 @@
+//importar para usar a animacao
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var context = new AudioContext();
+var accentPitch = 380, offBeatPitch = 200;
+
 const tocar = document.getElementById('tocar_btn');
 
 const bpm_range = document.getElementById('input_bpm_range');
@@ -119,7 +124,24 @@ function iniciar(){
 	    audio.currentTime = 0;
 	    audio.play();
 
-	    contar();
+		contar();
+		
+		//animacao
+		var note = context.createOscillator();
+
+		if( $(".dot").eq(tick_contar-1).hasClass("active") )
+		  note.frequency.value = accentPitch;
+		else
+		  note.frequency.value = offBeatPitch;
+	
+		note.connect(context.destination);
+	
+		$(".dot").attr("style", "");
+
+		$(".dot").eq(tick_contar-1).css({
+		transform: "translateY(-5px)",
+		background: "#F75454"
+		});
 }
 
 //iniciar_divisao
@@ -214,7 +236,7 @@ function verificarDivisaoMute() {
 }
 
 //muda o compasso do tempo(qnt de tempo)
-qnt_compasso_sel.addEventListener('change', function(){
+$("#qnt_compasso_sel").on("change", function() {
     qnt_compasso_sel_valor = qnt_compasso_sel.options[qnt_compasso_sel.selectedIndex].value = this.value;
     qnt_compasso_sel_valor = parseInt(qnt_compasso_sel_valor) + 1;
 
@@ -227,6 +249,20 @@ qnt_compasso_sel.addEventListener('change', function(){
 		reiniciar_metronomo();
 
 	}
+
+	var _counter = $(".animacao_counter");
+  _counter.html("");
+
+  for(var i = 0; i < parseInt(qnt_compasso_sel_valor-1, 10); i++)
+  {
+    var temp = document.createElement("div");
+    temp.className = "dot";
+
+    if(i === 0)
+      temp.className += " dot-active";
+
+    _counter.append( temp );
+  }
 
 });
 
@@ -337,6 +373,16 @@ function parar(){
 		tick_contar = 0;
 		tick_contar_divisao = 0;
 
+		$(".dot").css({
+			transform: "translateY(0px)",
+			background: "#bbbbbbdd"
+		});
+
+		$(".dot-active").css({
+			transform: "translateY(0px)",
+			background: "#64b5f6"
+		});
+
 }
 
 //inica o motronomo 
@@ -400,9 +446,7 @@ $("#tap_tempo_btn").click(function() {
 
 	 //se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
 	 if (tocando_agr) {
-		
 		reiniciar_metronomo();
-		
     }
 
   	delta = tempo;
@@ -453,9 +497,7 @@ function ValorAndamento(){
 }
 
 function reiniciar_metronomo(){
-	audio.muted = true;
-	audio.divisao = true;
-	audio_marcador.muted = true;
+
 	parar();
 	iniciar();
 	iniciar_divisao();

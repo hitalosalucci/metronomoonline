@@ -23,3 +23,27 @@ body{
 	width: 160px;
 	height: 600px;
 }
+
+/*div que contem os circulos das animações*/
+.animacao_counter{
+	margin-top: 10px;;
+}
+
+/*circulos das animações*/
+.dot {
+	height: 17px;
+	width: 17px;
+	background-color: #bbbbbbdd;
+	border-radius: 50%;
+	display: inline-block;
+	margin-left: 3px;
+	margin-right: 3px;;
+  }
+
+  .dot-active{
+	height: 17px;
+	width: 17px;
+	background-color: #64b5f6 ;
+	border-radius: 50%;
+	display: inline-block;
+  }
