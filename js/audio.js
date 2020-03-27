@@ -140,7 +140,7 @@ function iniciar(){
 
 		$(".dot").eq(tick_contar-1).css({
 		transform: "translateY(-5px)",
-		background: "#F75454"
+		background: "#ef6c00"
 		});
 }
 
@@ -380,7 +380,7 @@ function parar(){
 
 		$(".dot-active").css({
 			transform: "translateY(0px)",
-			background: "#64b5f6"
+			background: "#01579b"
 		});
 
 }
@@ -394,7 +394,8 @@ tocar.addEventListener('click', function(){
 		tocar.innerHTML = 'Iniciar';
 		numero_tempo.innerHTML = "<strong>--</strong>"; 
 
-    	tocar.classList.remove('red');
+		tocar.classList.remove('orange');
+		tocar.classList.remove('darken-3');
     	tocar.classList.add('green');
 
     }else{
@@ -412,7 +413,8 @@ tocar.addEventListener('click', function(){
 		tempo_divisao = setInterval(iniciar_divisao, (60*1000)/currentBpm/qnt_divisao_sel_valor);
 
     	tocar.classList.remove('green');
-    	tocar.classList.add('red');
+		tocar.classList.add('orange');
+		tocar.classList.add('darken-3');
     }
     //zera os parametros de novo
     tocando_agr = !tocando_agr
