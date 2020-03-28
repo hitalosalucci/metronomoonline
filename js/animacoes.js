@@ -30,15 +30,15 @@ function carrega_anuncio_lateral(){
     random_lateral();
 
     if (random_lateral() == 0){
-        img_lateral.src = 'anuncios/laterais/bannergi1.jpg';
+        img_lateral.src = 'anuncios/laterais/bannergi1.webp';
     } else if (random_lateral() == 1){
-        img_lateral.src = 'anuncios/laterais/bannergi2.jpg';
+        img_lateral.src = 'anuncios/laterais/bannergi2.webp';
     } else if (random_lateral() == 2){
-        img_lateral.src = 'anuncios/laterais/bannergi3.jpg';
+        img_lateral.src = 'anuncios/laterais/bannergi3.webp';
     } else if (random_lateral() == 3){
-        img_lateral.src = 'anuncios/laterais/bannergi4.jpg';
+        img_lateral.src = 'anuncios/laterais/bannergi4.webp';
     } else {
-        img_lateral.src = 'anuncios/laterais/bannergi1.jpg';
+        img_lateral.src = 'anuncios/laterais/bannergi1.webp';
     }
 }
 
@@ -49,13 +49,13 @@ function carrega_anuncio_rodape(){
     random_rodape();
 
     if (random_rodape() == 0){
-        img_rodape.src = 'anuncios/rodape/bannergi1.jpg';
+        img_rodape.src = 'anuncios/rodape/bannergi1.webp';
     } else if (random_rodape() == 1){
-        img_rodape.src = 'anuncios/rodape/bannergi2.jpg';
+        img_rodape.src = 'anuncios/rodape/bannergi2.webp';
     } else if (random_rodape() == 2){
-        img_rodape.src = 'anuncios/rodape/bannergi3.jpg';
+        img_rodape.src = 'anuncios/rodape/bannergi3.webp';
     } else {
-        img_rodape.src = 'anuncios/rodape/bannergi1.jpg';
+        img_rodape.src = 'anuncios/rodape/bannergi1.webp';
     }
 }
 
