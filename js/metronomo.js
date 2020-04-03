@@ -441,21 +441,20 @@ function parar(){
 
 }
 
-//inica o motronomo 
-tocar.addEventListener('click', function(){
-    //se ja estiver tocando simplesmente zera o tempo de intervalo
-    if (tocando_agr) {
-		
+function iniciar_metronomo_completo(){
+	//se ja estiver tocando simplesmente zera o tempo de intervalo
+	if (tocando_agr) {
+	
 		parar();
 		tocar.innerHTML = 'Iniciar';
 		numero_tempo.innerHTML = "<strong>--</strong>"; 
 
 		tocar.classList.remove('orange');
 		tocar.classList.remove('darken-3');
-    	tocar.classList.add('green');
+		tocar.classList.add('green');
 
-    }else{
-    	tocar.innerHTML = 'Parar';
+	}else{
+		tocar.innerHTML = 'Parar';
 		//inicia o audio do metronomo
 		iniciar();
 
@@ -468,48 +467,77 @@ tocar.addEventListener('click', function(){
 		//intervalo de repetição da divisao
 		tempo_divisao = setInterval(iniciar_divisao, (60*1000)/currentBpm/qnt_divisao_sel_valor);
 
-    	tocar.classList.remove('green');
+		tocar.classList.remove('green');
 		tocar.classList.add('orange');
 		tocar.classList.add('darken-3');
-    }
-    //zera os parametros de novo
-    tocando_agr = !tocando_agr
+	}
+	//zera os parametros de novo
+	tocando_agr = !tocando_agr
+}
+
+//inica o motronomo 
+tocar.addEventListener('click', function(){
+	iniciar_metronomo_completo();
 });
 
-//tap tempo
+//função que faz o tempo tempo funcionar
+function tap_tempo(){
+	var data = new Date();
+	var tempo = parseInt(data.getTime(), 10);
+
+	$("#input_bpm_txt").val(Math.ceil(60000 / (tempo - delta)) );
+	$("#input_bpm_range").val(Math.ceil(60000 / (tempo - delta)) );
+
+   currentBpm = Math.ceil(60000 / (tempo - delta));
+
+   //limitar o valor maximo e minimo
+
+   if (currentBpm > 260) {
+	   currentBpm = 260;
+	   document.getElementById('input_bpm_range').value = 260;
+	   document.getElementById('input_bpm_txt').value = 260;
+   }
+
+   //caso o numero digitado no txt for menor que 20, o input trava em 20
+   if (currentBpm < 20) {
+	   currentBpm = 20;
+	   document.getElementById('input_bpm_range').value = 20;
+	   document.getElementById('input_bpm_txt').value = 20;
+   }
+
+	//se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
+	if (tocando_agr) {
+	   reiniciar_metronomo();
+   }
+
+	 delta = tempo;
+}
+
+//tap tempo - chama a função tap_tempo() ao clicar no botão TAP
 $("#tap_tempo_btn").click(function() {
 
-	var data = new Date();
- 	var tempo = parseInt(data.getTime(), 10);
-
-	 $("#input_bpm_txt").val(Math.ceil(60000 / (tempo - delta)) );
-	 $("#input_bpm_range").val(Math.ceil(60000 / (tempo - delta)) );
-
-	currentBpm = Math.ceil(60000 / (tempo - delta));
-
-	//limitar o valor maximo e minimo
-
-	if (currentBpm > 260) {
-		currentBpm = 260;
-		document.getElementById('input_bpm_range').value = 260;
-		document.getElementById('input_bpm_txt').value = 260;
-	}
-
-	//caso o numero digitado no txt for menor que 20, o input trava em 20
-	if (currentBpm < 20) {
-		currentBpm = 20;
-		document.getElementById('input_bpm_range').value = 20;
-		document.getElementById('input_bpm_txt').value = 20;
-	}
-
-	 //se tiver tocando nomento limpa o intervalo de tempo e reinicia o currentbpm	
-	 if (tocando_agr) {
-		reiniciar_metronomo();
-    }
-
-  	delta = tempo;
+tap_tempo();
 
 });
+
+//chama a funcção tap_tempo() ao clicar na tecla T/t -- COD 84/116
+$(document).ready(function(){
+
+	$(document).keypress(function(tecla){ //Ao pressionar a tecla
+		//se a tecla for t/T vai executar o tap_tempo()
+		if((tecla.wich == 84 || tecla.keyCode == 84) || (tecla.wich == 116 || tecla.keyCode == 116)){
+			tap_tempo();
+		}
+	});	
+
+	$(document).keypress(function(tecla){ //Ao pressionar a tecla
+		//se a tecla for a tecla enter execute o iniciar_metronomo()
+		if(tecla.wich == 13 || tecla.keyCode == 13){
+			iniciar_metronomo_completo();
+		}
+
+	});
+});		
 
 
 //mudar o titulo do anamento de acordo com o andamento
