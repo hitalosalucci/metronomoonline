@@ -1,1 +1,1 @@
-Projeto de um aplicativo Web de metrônomo com divulgação e divulgação de bons cursos de música, de forma a ajudar pessoas e consequentemente, monetizar ou aplicativo.
+Projeto de um WEB APP de metrônomo com o objetivo de estudo da linguagem JavaScript puro e conhecer a estrutura do Framework CSS Materialize.
