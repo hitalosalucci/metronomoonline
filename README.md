@@ -21,8 +21,11 @@
 - [x] TAP Tempo do metrônomo (Cálculo do BPM de acordo com o clique)
 - [x] Funcionalidades de TAP, Play e Pause com o teclado
 - [x] Mudar som do beep do marcador
-- [x] Opçôes de ouvir ou não marcadores de tempo ou divisão do tempo do metrônomo 
+- [x] Opções de ouvir ou não marcadores de tempo ou divisão do tempo do metrônomo 
 - [x] Apresentar propagandas carregando de maneira aleatória imagens nos rodapés e laterais
 
-[PROJETO HOSPEDADO](https://hitalosalucci.github.io/metronomoonline)
 <a target="_blank" href="https://hitalosalucci.github.io/metronomoonline">PROJETO HOSPEDADO</a>
+
+<hr>
+
+Dev by 🖥️ Hitalo Salucci ➡️ [Veja meu LinkedIn](https://www.linkedin.com/in/hitalosalucci) 
