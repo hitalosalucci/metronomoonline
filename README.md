@@ -25,4 +25,4 @@
 - [x] Apresentar propagandas carregando de maneira aleatória imagens nos rodapés e laterais
 
 [PROJETO HOSPEDADO](https://hitalosalucci.github.io/metronomoonline)
-<a target="__blank" href="https://hitalosalucci.github.io/metronomoonline">PROJETO HOSPEDADO</a>
+<a target="_blank" href="https://hitalosalucci.github.io/metronomoonline">PROJETO HOSPEDADO</a>
