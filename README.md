@@ -24,4 +24,5 @@
 - [x] Opçôes de ouvir ou não marcadores de tempo ou divisão do tempo do metrônomo 
 - [x] Apresentar propagandas carregando de maneira aleatória imagens nos rodapés e laterais
 
-- [PROJETO HOSPEDADO](https://hitalosalucci.github.io/metronomoonline)
+[PROJETO HOSPEDADO](https://hitalosalucci.github.io/metronomoonline)
+<a target="__blank" href="https://hitalosalucci.github.io/metronomoonline">PROJETO HOSPEDADO</a>
